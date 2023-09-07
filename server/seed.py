@@ -1,17 +1,30 @@
 #!/usr/bin/env python3
-
-# Standard library imports
 from random import randint, choice as rc
-
-# Remote library imports
 from faker import Faker
-
-# Local imports
 from app import app
-from models import db
+from config import db
+from models import User, Book, Review
+from werkzeug.security import generate_password_hash
 
 if __name__ == '__main__':
     fake = Faker()
     with app.app_context():
         print("Starting seed...")
-        # Seed code goes here!
+        User.query.delete()
+        Book.query.delete()
+        Review.query.delete()
+        
+        users = []
+
+        for _ in range(20):
+            password = fake.password()
+            hashed_password = generate_password_hash(password)
+            user = User(
+                email = fake.email(),
+                username = fake.user_name(),
+                password_hash=hashed_password
+            )
+            db.session.add(user)
+            users.append(user)
+        db.session.commit()
+
