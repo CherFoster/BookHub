@@ -74,6 +74,16 @@ class Review(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
 
+    @validates('rating')
+    def validate_rating(self, key, rating):
+        if not isinstance(rating, int):
+            raise AssertionError('Rating must be an integer')
+        
+        if rating < 1 or rating > 10:
+            raise AssertionError('Rating must be between 1 and 10')
+        
+        return rating
+
     def __repr__(self):
         return (
             f'Review: {self.review},' \
