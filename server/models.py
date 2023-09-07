@@ -4,6 +4,11 @@ from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
 from config import db, bcrypt
 
+user_books = db.Table('user_books',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('book_id', db.Integer, db.ForeignKey('books.id'))
+)
+
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
@@ -13,7 +18,8 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String, unique=True)
     username = db.Column(db.String, nullable=False)
     _password_hash = db.Column(db.String)
-    reviews = db.relatonship('Review', back_populates='user')
+    reviews = db.relatonship('Review', backref='user')
+    books = db.relationship('Book', secondary= user_books, backref='users')
   
     @hybrid_property
     def password_hash(self):
@@ -44,7 +50,8 @@ class Book(db.Model, SerializerMixin):
     description =db.Column(db.String)
     status = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    reviews = db.relatonship('Review', back_populates='book')
+    reviews = db.relatonship('Review', backref='book')
+    user = db.relationship('User', secondary=user_books, backref='books')
 
     def __repr__(self):
         return (
