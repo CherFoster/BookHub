@@ -12,7 +12,7 @@ user_books = db.Table('user_books',
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-books.user', '-_password_hash',)
+    serialize_rules = ('-reviews', '-books', '-_password_hash')
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String, unique=True)
@@ -42,6 +42,8 @@ class User(db.Model, SerializerMixin):
 
 class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
+
+    serialize_rules = ('-user',)
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
