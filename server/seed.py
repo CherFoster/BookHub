@@ -27,7 +27,6 @@ if __name__ == '__main__':
             )
             db.session.add(user)
             users.append(user)
-        db.session.commit()
 
         books = []
 
@@ -63,11 +62,22 @@ if __name__ == '__main__':
                 author = fake.name(),
                 genre = random.choice(book_genres),
                 description = fake.paragraph(nb_sentences=10),
-                status = random.choice(read_status)
+                status = random.choice(read_status),
+                user_id = rc(users)
             )
             db.session.add(book)
             books.append(book)
+
+        reviews = []
+
+        for _ in range(15):
+            review = Review(
+                review_paragraph = fake.paragraph(nb_sentences=10),
+                rating = random.randint(1,10),
+                user_id = rc(users),
+                book_id = rc(books)
+            )
+            db.session.add(review)
+            reviews.append(review)
+        
         db.session.commit()
-
-
-
