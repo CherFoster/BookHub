@@ -66,7 +66,6 @@ if __name__ == '__main__':
             author = fake.name(),
             description = fake.paragraph(nb_sentences=10),
             status = random.choice(read_status),
-            # user_id = rc(users).id
         )
         book.tags = [Tag(genre=random.choice(genres)) for _ in range(random.randint(1, 3))]
         book.user = rc(users)
@@ -85,18 +84,6 @@ if __name__ == '__main__':
         reviews.append(review)
 
     db.session.add_all(reviews)
-
-    # tags = []
-    
-    # for _ in range(60):
-    #     tag = Tag(
-    #         genre = random.choice(genres)
-    #     )
-
-    # tag1 = Tag(genre='Fiction')
-    # tag2 = Tag(genre='Non-Fiction')
-    # tag3 = Tag(genre='Mystery')
-    # tag4 = Tag(genre='Self Help')
     
     db.session.commit()
     print("Complete.")
