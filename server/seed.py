@@ -72,6 +72,7 @@ if __name__ == '__main__':
             book = Book(
                 title = fake.catch_phrase(),
                 author = fake.name(),
+                image=fake.url(),
                 description = fake.paragraph(nb_sentences=10),
                 status = random.choice(read_status),
             )
