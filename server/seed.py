@@ -17,7 +17,6 @@ if __name__ == '__main__':
         
         users = []
         usernames = []
-
         for i in range(20):
             username = fake.first_name()
             while username in usernames:
@@ -29,16 +28,12 @@ if __name__ == '__main__':
             )
             user.password_hash = user.username + 'password'
             users.append(user)
-
             db.session.add_all(users)
+
         db.session.commit()
 
         print("Creating Book List...")
-        books = []
-        read_status = [
-            "Read",
-            "Want to read"
-        ]
+        
         genres = [
             "Fiction",
             "Non-Fiction",
@@ -60,14 +55,18 @@ if __name__ == '__main__':
             "Young Adult (YA)"
         ]
         tags = []
-
         for _ in range(50):
             tag = Tag(genre=random.choice(genres)) 
             tags.append(tag)
-            
             db.session.add_all(tags)
+
         db.session.commit()
 
+        books = []
+        read_status = [
+            "Read",
+            "Want to read"
+        ]
         for _ in range(60):
             book = Book(
                 title = fake.catch_phrase(),
@@ -76,12 +75,12 @@ if __name__ == '__main__':
                 description = fake.paragraph(nb_sentences=10),
                 status = random.choice(read_status),
             )
-            book.tags = random.sample(tags, k=random.randint(1,3))
+            book.tags = random.sample(tags, k=random.randint(1,2))
 
             book.user = rc(users)
             books.append(book)
-
             db.session.add_all(books)
+
         db.session.commit()
 
         reviews = []
@@ -93,12 +92,7 @@ if __name__ == '__main__':
                 book_id = rc(books).id
             )
             reviews.append(review)
-
             db.session.add_all(reviews)
         
         db.session.commit()
         print("Complete.")
-
-
-
-       # book.tags = [Tag(genre=random.choice(genres)) for _ in range(random.randint(1, 3))]
