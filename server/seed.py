@@ -4,7 +4,6 @@ from faker import Faker
 from app import app
 from config import db
 from models import User, Tag, Book, Review, genre_tag
-from werkzeug.security import generate_password_hash
 import random
 
 if __name__ == '__main__':
