@@ -3,7 +3,7 @@ from random import randint, choice as rc
 from faker import Faker
 from app import app
 from config import db
-from models import User, Book, Review
+from models import User, Book, Review, assoc_table
 from werkzeug.security import generate_password_hash
 import random
 
@@ -23,7 +23,7 @@ if __name__ == '__main__':
             user = User(
                 email = fake.email(),
                 username = fake.user_name(),
-                password_hash=hashed_password
+                _password_hash=hashed_password
             )
             db.session.add(user)
             users.append(user)
@@ -63,7 +63,7 @@ if __name__ == '__main__':
                 genre = random.choice(book_genres),
                 description = fake.paragraph(nb_sentences=10),
                 status = random.choice(read_status),
-                user_id = rc(users)
+                user_id = rc(users).id
             )
             db.session.add(book)
             books.append(book)
@@ -72,10 +72,10 @@ if __name__ == '__main__':
 
         for _ in range(15):
             review = Review(
-                review_paragraph = fake.paragraph(nb_sentences=10),
+                review = fake.paragraph(nb_sentences=10),
                 rating = random.randint(1,10),
-                user_id = rc(users),
-                book_id = rc(books)
+                user_id = rc(users).id,
+                book_id = rc(books).id
             )
             db.session.add(review)
             reviews.append(review)

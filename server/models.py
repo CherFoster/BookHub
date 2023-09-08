@@ -3,7 +3,7 @@ from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
 from config import db, bcrypt
 
-user_books = db.Table('user_books',
+assoc_table = db.Table('assoc_table',
     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
     db.Column('book_id', db.Integer, db.ForeignKey('books.id'))
 )
@@ -17,8 +17,9 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String, unique=True)
     username = db.Column(db.String, nullable=False)
     _password_hash = db.Column(db.String)
-    reviews = db.relatonship('Review', backref='user')
-    books = db.relationship('Book', secondary= user_books, backref='users')
+
+    reviews = db.relationship('Review', back_populates='user')
+    books = db.relationship('Book', secondary=assoc_table, back_populates='users')
   
     @hybrid_property
     def password_hash(self):
@@ -51,8 +52,9 @@ class Book(db.Model, SerializerMixin):
     description =db.Column(db.String)
     status = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    reviews = db.relatonship('Review', backref='book')
-    user = db.relationship('User', secondary=user_books, backref='books')
+    
+    reviews = db.relationship('Review', back_populates='book')
+    users = db.relationship('User', secondary=assoc_table, back_populates='books')
 
     def __repr__(self):
         return (
