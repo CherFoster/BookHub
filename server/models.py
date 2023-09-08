@@ -74,6 +74,8 @@ class Review(db.Model, SerializerMixin):
     rating = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
+    user = db.relationship("User", back_populates="reviews")
+    book = db.relationship("Book", back_populates="reviews")
 
     @validates('rating')
     def validate_rating(self, key, rating):
