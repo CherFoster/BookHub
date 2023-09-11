@@ -93,6 +93,42 @@ class Books(Resource):
             return response
 api.add_resource(Books, '/books')
 
+class BookId(Resource):
+    def get(self, id):
+        book = Book.query.filter_by(id=id).first()
+        if not book:
+            raise NotFound
+        response = make_response(book.to_dict(), 200)
+        return response
+    
+    def patch(self, id):
+        book = Book.query.filter_by(id=id).first()
+        if not book:
+            raise NotFound
+        
+        json_data = request.get_json()
+
+        if 'status' in json_data:
+            book.status = json_data['status']
+        
+        db.session.add(book)
+        db.session.commit()
+        response = make_response(book.to_dict(), 200)
+        return response
+    
+    def delete(self, id):
+        book = Book.query.filter_by(id=id).first()
+        if not book:
+            raise NotFound
+        db.session.delete(book)
+        db.session.commit()
+        response = make_response("Deleted", 204)
+        return response
+api.add_resource(BookId,'/books/<int:id>')
+
+
+
+
 
 
 
