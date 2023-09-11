@@ -5,6 +5,7 @@ from config import app, db, api
 from models import User, Tag, Book, Review
 from flask_restful import Resource
 from werkzeug.exceptions import NotFound, Unauthorized
+from sqlalchemy.exc import IntegrityError
 
 @app.route('/')
 def index():
@@ -56,6 +57,41 @@ class Logout(Resource):
         return response
 api.add_resource(Logout, '/logout')
 
+class Books(Resource):
+    def get(self):
+        if session.get('user_id'):
+            user = User.query.filter_by(id=session['user_id']).first()
+            book_list = [book.to_dict() for book in user.books]
+            response = make_response(book_list, 200)
+            return response
+        else:
+            return {"error": "Please log in"}, 401
+    
+    def post(self):
+        if session.get('user_id'):
+            json_data = request.get_json()
+            title = json_data.get('title')
+            author = json_data.get('author')
+            image = json_data.get('image')
+            description = json_data.get('description')
+            status = json_data.get('status')
+            try:
+                new_book = Book(
+                    title = title,
+                    author = author,
+                    image = image,
+                    description = description,
+                    status = status,
+                    user_id=session['user_id']               
+                )
+            except ValueError as e:
+                abort(422,e.args[0])
+
+            db.session.add(new_book)
+            db.session.commit()
+            response = make_response(new_book.to_dict(), 201)
+            return response
+api.add_resource(Books, '/books')
 
 
 
