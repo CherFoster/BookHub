@@ -11,13 +11,13 @@ genre_tag = db.Table('genre_tag',
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-books.user', '-_password_hash',)
+    serialize_rules = ('-books.user', '-_password_hash', '-reviews.user',)
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False)
     _password_hash = db.Column(db.String)
 
-    books = db.relationship('Book', back_populates='user')
+    books = db.relationship('Book', back_populates='users')
     reviews = db.relationship('Review', back_populates='user')
   
     @hybrid_property
@@ -52,6 +52,8 @@ class Tag(db.Model, SerializerMixin):
 class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
 
+    serialize_rules = ('-user', '-tags', '-reviews.user',)
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
     author = db.Column(db.String)
@@ -77,6 +79,8 @@ class Book(db.Model, SerializerMixin):
     
 class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
+
+    serialize_rules = ('-user.reviews',)
 
     id = db.Column(db.Integer, primary_key=True)
     review = db.Column(db.String)

@@ -65,7 +65,7 @@ class Books(Resource):
             response = make_response(book_list, 200)
             return response
         else:
-            return {"error": "Please log in"}, 401
+            return {"error": "Unauthorized, please log in"}, 401
     
     def post(self):
         if session.get('user_id'):
@@ -126,23 +126,55 @@ class BookId(Resource):
         return response
 api.add_resource(BookId,'/books/<int:id>')
 
+class Reviews(Resource):
+    def get(self, book_id):
+        book = Book.query.filter_by(id=book_id).first()
+        if not book:
+            raise NotFound
+        
+        reviews = Review.query.filter_by(book_id=book_id).all()
+        review_list = [review.to_dict() for review in reviews]
+        response = make_response(review_list, 200)
+        return response
+    
+    def post(self, book_id):
+        if not session.get('user_id'):
+            return {'error': 'Unauthorized, please log in'}, 401
 
+        json_data = request.get_json()
+        user_id = session['user_id']
 
+        book = Book.query.filter_by(id=book_id).first()
+        if not book:
+            raise NotFound
 
+        review_text = json_data.get('review')
+        rating = json_data.get('rating')
+        new_review = Review(
+            review=review_text,
+            rating=rating,
+            user_id=user_id,
+            book_id=book_id
+        )
+        db.session.add(new_review)
+        db.session.commit()
 
+        response = make_response(new_review.to_dict(), 201)
+        return response
+api.add_resource(Reviews, '/books/<int:book_id>/reviews')
 
+class BookTags(Resource):
+    def get(self, tag):
+        tagged_books = Tag.query.filter_by(genre=tag).first()
 
-
-
-
-
-
-
-
-
-
-
-
+        if not tagged_books:
+            raise NotFound
+        
+        books = tagged_books.books
+        book_list = [book.to_dict() for book in books]
+        response = make_response(book_list, 200)
+        return response
+api.add_resource(BookTags, '/books/tag/<string:tag>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
