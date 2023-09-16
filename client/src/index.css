@@ -5,3 +5,14 @@
   --text: hsla(0, 0%, 100%, 0.88);
 }
 
+ .banner-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-40%);
+}
+
+.banner {
+  width: 80%;
+  max-width: 500px;
+}

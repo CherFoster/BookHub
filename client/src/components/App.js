@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import Signup from "./Signup";
 
 function App() {
+
   return (
-    <>
-      <h1>Phase 4 Project Client</h1>
+    <BrowserRouter>
+      <Link to="/signup"></Link> 
+
       <Switch>
-        <Route path="/signup" component={Signup} />
+        <Route path="/signup">
+          <Signup />
+        </Route>
       </Switch>
-    </>
+    </BrowserRouter>
   );
+
 }
 
 export default App;
