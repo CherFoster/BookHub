@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Signup from "./Signup";
+import Login from "./Login";
 
 function App() {
 
   return (
-    <BrowserRouter>
-      <Link to="/signup"></Link> 
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Router>
+      
 
-      <Switch>
-        <Route path="/signup">
-          <Signup />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    </div>
   );
 
 }

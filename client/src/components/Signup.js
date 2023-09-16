@@ -1,24 +1,64 @@
 import '../styles/Signup.css';
-import React from "react";
+import React, { useState } from "react";
 
-function Signup() {
+function Signup({ onLogin }) {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
+    function handleSumbit(e) {
+        e.preventDefault();
+        setErrors([]);
+        setIsLoading(true);
+        fetch("/signup", {
+            method: 'POST',
+            headers : {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password})
+        }).then((res) => {
+            setIsLoading(false);
+            if (res.ok) {
+                res.json().then((user) => onLogin(user));
+            } else {
+                res.json().then((err) => {
+                    setErrors(err.errors || ["An error occured"]);
+                });
+            }
+        });       
+    }
 
     return (
         <div className="signup-box">
-            <h2>Signup</h2>
-            <form>
+            <h2>Sign Up</h2>
+            <form onSubmit={handleSumbit}>
                 <div className="user-box">
-                    <input type="text" id="username" name="username" required />
-                    <label htmlFor="username">Create a Username</label>
+                    <input
+                    type="text" 
+                    id="username"
+                    name="username" 
+                    required 
+                    onChange={(e) => setUsername(e.target.value)}/>
+                    <label>Create a Username</label>
                 </div>
                 <div className="user-box">
-                    <input type="password" id="password" name="password" required />
-                    <label htmlFor="password">Create a Password</label>
+                    <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    onChange={(e) => setPassword(e.target.value)}/>
+                    <label>Create a Password</label>
                 </div>
                 <button type="submit" className="submit-button">
-                    SIGNUP
+                    {isLoading ? "Loading..." : "Sign Up"}
                 </button>
+                <div className='error-messages'>
+                    {errors.map((error) => (
+                        <p key={error}>{error}</p>
+                    ))}
+                </div>
             </form>
         </div>
       );
