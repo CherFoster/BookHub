@@ -37,7 +37,8 @@ function Signup({ onLogin }) {
                     <input
                     type="text" 
                     id="username"
-                    name="username" 
+                    name="username"
+                    value={username} 
                     required 
                     onChange={(e) => setUsername(e.target.value)}/>
                     <label>Create a Username</label>
@@ -47,6 +48,7 @@ function Signup({ onLogin }) {
                     type="password"
                     id="password"
                     name="password"
+                    value={password}
                     required
                     onChange={(e) => setPassword(e.target.value)}/>
                     <label>Create a Password</label>
@@ -56,8 +58,7 @@ function Signup({ onLogin }) {
                 </button>
                 <div className='error-messages'>
                     {errors.map((error) => (
-                        <p key={error}>{error}</p>
-                    ))}
+                        <p key={error}>{error}</p>))}
                 </div>
             </form>
         </div>
