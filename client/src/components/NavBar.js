@@ -21,13 +21,12 @@ function NavBar({ user, setUser }) {
     return (
         <div className='navbar'>
             <div className="nav-links">
-                <button as={Link} to='/'>Home</button>
-                <button as={Link} to="/books/new">Add a Book</button>
-                <button onClick={handleLogout}>Logout</button>
+                <Link to="/" className="nav-link">Home</Link>
+                <Link to="/books/new" className="nav-link">Add a Book</Link>
+                <button onClick={handleLogout} className="nav-link">Logout</button>
             </div>
         </div>
     )
-
 }
 
 export default NavBar;

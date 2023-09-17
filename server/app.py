@@ -15,13 +15,21 @@ class Signup(Resource):
     def post(self):
         json_data = request.get_json()
 
-        new_user = User(username=json_data['username'])
-        new_user.password_hash = json_data['password']
-        db.session.add(new_user)
-        db.session.commit()
+        username = json_data.get('username')
+        password = json_data.get('password')
+
+        if username and password:
+            new_user = User(
+                username=username,
+            )
+            new_user.password_hash = password
+            db.session.add(new_user)
+            db.session.commit()
+
+            session['user_id'] = new_user.id
         
-        response = make_response(new_user.to_dict(), 201)
-        return response
+            response = make_response(new_user.to_dict(), 201)
+            return response
 api.add_resource(Signup, '/signup')
 
 class Login(Resource):

@@ -1,5 +1,31 @@
-
 .navbar {
     text-align: center;
     padding: 130px;
+}
+.nav-links {
+    display: flex;
+    justify-content: center;
+}
+.nav-link {
+    position: relative;
+    display: inline-block;
+    color: #03e9f4;
+    font-size: 16px;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.5s;
+    margin-top: 20px;
+    margin-right: 20px; /* Add space between links */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none; /* Remove underlines from links */
+}
+
+/* Styling for links on hover */
+.nav-link:hover {
+    background: #03e9f4;
+    color: #070707;
+    border-radius: 5px;
 }

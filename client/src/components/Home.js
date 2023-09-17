@@ -1,4 +1,6 @@
+import '../styles/Home.css';
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Home({ user }) {
     const [readBooks, setReadBooks] = useState([]);
@@ -21,28 +23,34 @@ function Home({ user }) {
     }, []);
 
     return (
-        <div>
+        <div className='home-container'>
           <h2>Welcome to BookHub, {user.username}!</h2>
-          <div>
-            <h3>Books You've Read</h3>
-            <ul>
-              {readBooks.map((book) => (
-                <li key={book.id}>
-                  {book.title} by {book.author}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <div className='links'>
+            <div className='link'>
+              <h3>
+                <Link to="/read">Books You've Read</Link>
+              </h3>
+              <ul>
+                {readBooks.map((book) => (
+                  <li key={book.id}>
+                    {book.title} by {book.author}
+                  </li>
+                ))}
+              </ul>
+            </div>
     
-          <div>
-            <h3>Books You Want to Read</h3>
-            <ul>
-              {wantToReadBooks.map((book) => (
-                <li key={book.id}>
-                  {book.title} by {book.author}
-                </li>
-              ))}
-            </ul>
+            <div className='link'>
+              <h3>
+                <Link to="/want-to-read">Books You Want to Read</Link>
+              </h3>
+              <ul>
+                {wantToReadBooks.map((book) => (
+                  <li key={book.id}>
+                    {book.title} by {book.author}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       );
