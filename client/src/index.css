@@ -4,7 +4,15 @@
   --link: #61dafb;
   --text: hsla(0, 0%, 100%, 0.88);
 }
-
+html {
+  height: 100%;
+}
+body {
+  margin:0;
+  padding:0;
+  font-family: sans-serif;
+  background: linear-gradient(#202463, #9095E8);
+}
  .banner-container {
   position: absolute;
   top: 0;

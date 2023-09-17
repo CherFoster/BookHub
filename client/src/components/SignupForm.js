@@ -1,7 +1,7 @@
 import '../styles/Signup.css';
 import React, { useState } from "react";
 
-function Signup({ onLogin }) {
+function SignupForm({ onLogin }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState([]);
@@ -65,4 +65,4 @@ function Signup({ onLogin }) {
       );
     }
     
-    export default Signup;
+    export default SignupForm;

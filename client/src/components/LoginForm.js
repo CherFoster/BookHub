@@ -1,7 +1,7 @@
 import '../styles/Login.css';
 import React, { useState } from "react";
 
-function Login({ onLogin }) {
+function LoginForm({ onLogin }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState([]);
@@ -62,4 +62,4 @@ function Login({ onLogin }) {
     );
 }
 
-export default Login;
+export default LoginForm;
