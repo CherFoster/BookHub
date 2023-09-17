@@ -20,7 +20,7 @@ function App() {
 
   return (
       <Router>
-        <NavBar />
+        <NavBar user={user} setUser={setUser} />
         <Routes>
           
         </Routes>
