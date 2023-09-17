@@ -31,7 +31,7 @@ function LoginForm({ onLogin }) {
     return (
         <div className="login-box">
             <h2>Login</h2>
-            <form onSumbit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div className="user-box">
                     <input 
                     type="text" 

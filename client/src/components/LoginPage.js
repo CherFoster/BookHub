@@ -16,7 +16,7 @@ function LoginPage({ onLogin }) {
                     <LoginForm onLogin={onLogin}/>
                     <br></br>
                     <p>
-                      Don't have an account? 
+                      Don't have an account?
                         <button onClick={() => setShowLogin(false)}>
                           Sign Up 
                         </button>

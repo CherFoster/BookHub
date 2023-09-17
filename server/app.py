@@ -58,10 +58,11 @@ class Logout(Resource):
 api.add_resource(Logout, '/logout')
 
 class Books(Resource):
-    def get(self):
+    def get(self, status):
         if session.get('user_id'):
             user = User.query.filter_by(id=session['user_id']).first()
-            book_list = [book.to_dict() for book in user.books]
+            book_status = user.books.filter_by(status=status).all()
+            book_list = [book.to_dict() for book in book_status]
             response = make_response(book_list, 200)
             return response
         else:

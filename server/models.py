@@ -17,7 +17,7 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String, nullable=False)
     _password_hash = db.Column(db.String)
 
-    books = db.relationship('Book', back_populates='users')
+    books = db.relationship('Book', back_populates='user')
     reviews = db.relationship('Review', back_populates='user')
   
     @hybrid_property

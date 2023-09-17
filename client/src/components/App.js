@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import LoginPage from "./LoginPage";
+import NavBar from "./NavBar";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -18,15 +19,13 @@ function App() {
   if (!user) return <LoginPage onLogin={setUser} />;
 
   return (
-    <div>
       <Router>
+        <NavBar />
         <Routes>
-          ?
+          
         </Routes>
       </Router>
       
-
-    </div>
   );
 
 }
