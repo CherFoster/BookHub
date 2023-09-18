@@ -1,11 +1,10 @@
-// import { useHistory } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from 'react-router-dom';
 import '../styles/NavBar.css';
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; 
 
 function NavBar({ user, setUser }) {
-    // const history = useHistory();
-
+    const navigate = useNavigate();
 
     function handleLogout() {
         fetch("/logout", {
@@ -13,7 +12,7 @@ function NavBar({ user, setUser }) {
         }).then((res) => {
             if (res.ok) {
                 setUser(null)
-                // history.push("/login")
+                navigate("/login")
             }
         });
     }

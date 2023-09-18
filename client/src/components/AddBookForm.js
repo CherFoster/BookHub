@@ -17,9 +17,8 @@ function AddBookForm({ onAddBook }) {
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      // Call a function to add the book with bookData
       onAddBook(bookData);
-      // Optionally, reset the form fields
+      // reset the form fields
       setBookData({
         title: '',
         author: '',
@@ -74,7 +73,6 @@ function AddBookForm({ onAddBook }) {
             <label>Image URL</label>
           </div>
           <div className="user-box">
-            {/* <label>{bookData.status}:</label> */}
             <select
               name="status"
               value={bookData.status}

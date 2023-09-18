@@ -26,9 +26,8 @@ function App() {
           <Route path="/" element={<Home user={user} />} />
           <Route path="/home" element={<Home user={user} />} />
           <Route path="/books/new" element={<AddBookForm />} />
-
-
-          
+          <Route path="/books/read" element={<BooksList status="read" />} />
+          <Route path="/books/want-to-read" element={<BooksList status="want-to-read" />} />
         </Routes>
       </Router>
       

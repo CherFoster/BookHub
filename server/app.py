@@ -66,7 +66,8 @@ class Logout(Resource):
 api.add_resource(Logout, '/logout')
 
 class Books(Resource):
-    def get(self, status):
+    def get(self):
+        breakpoint()
         if session.get('user_id'):
             user = User.query.filter_by(id=session['user_id']).first()
             book_status = user.books.filter_by(status=status).all()
