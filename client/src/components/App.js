@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginPage from "./LoginPage";
 import NavBar from "./NavBar";
 import Home from "./Home";
+import BooksList from './BooksList';
+import AddBookForm from './AddBookForm';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -23,6 +25,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home user={user} />} />
           <Route path="/home" element={<Home user={user} />} />
+          <Route path="/books/new" element={<AddBookForm />} />
+
 
           
         </Routes>
