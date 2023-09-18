@@ -20,7 +20,7 @@ function App() {
   if (!user) return <LoginPage onLogin={setUser} />;
 
   return (
-      <Router>
+      <>
         <NavBar user={user} setUser={setUser} />
         <Routes>
           <Route path="/" element={<Home user={user} />} />
@@ -29,8 +29,7 @@ function App() {
           <Route path="/books/read" element={<BooksList status="read" />} />
           <Route path="/books/want-to-read" element={<BooksList status="want-to-read" />} />
         </Routes>
-      </Router>
-      
+      </>
   );
 
 }

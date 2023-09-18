@@ -67,10 +67,11 @@ api.add_resource(Logout, '/logout')
 
 class Books(Resource):
     def get(self):
-        breakpoint()
         if session.get('user_id'):
             user = User.query.filter_by(id=session['user_id']).first()
-            book_status = user.books.filter_by(status=status).all()
+            # Get the status from the query parameters
+            status = request.args.get('status')
+            book_status = [book for book in user.books if book.status == status]
             book_list = [book.to_dict() for book in book_status]
             response = make_response(book_list, 200)
             return response

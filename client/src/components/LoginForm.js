@@ -1,11 +1,13 @@
 import '../styles/Login.css';
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm({ onLogin }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -19,7 +21,10 @@ function LoginForm({ onLogin }) {
         }).then((res) => {
           setIsLoading(false);
           if (res.ok) {
-            res.json().then((user) => onLogin(user));
+            res.json().then((user) => {
+              onLogin(user);
+              navigate("/");
+            });
           } else {
                 res.json().then((err) => {
                     setErrors(err.errors || ["An error occured"]);
