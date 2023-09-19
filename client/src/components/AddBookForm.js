@@ -11,7 +11,7 @@ function AddBookForm() {
       description: '',
       genre: '',
       image: '',
-      status: 'want-to-read',
+      status: 'Want to read',
     });
     const navigate = useNavigate();
     const [errors, setErrors] = useState([]);
