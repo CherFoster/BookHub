@@ -10,7 +10,6 @@ function BookList({ status }) {
       .then((data) => {
         console.log(data);
         setBooks(data);
-        console.log(data);
       })
   }, [status]);
 

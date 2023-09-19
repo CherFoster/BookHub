@@ -99,8 +99,8 @@ function AddBookForm() {
               value={bookData.status}
               onChange={handleChange}
             >
-              <option value="read">Read</option>
-              <option value="want-to-read">Want to Read</option>
+              <option value="Read">Read</option>
+              <option value="Want to read">Want to Read</option>
             </select>
           </div>
           <button type="submit" className="submit-button">
