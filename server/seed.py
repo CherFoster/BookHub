@@ -64,8 +64,8 @@ if __name__ == '__main__':
 
         books = []
         read_status = [
-            "Read",
-            "Want to read"
+            "read",
+            "want-to-read"
         ]
         for _ in range(60):
             book = Book(

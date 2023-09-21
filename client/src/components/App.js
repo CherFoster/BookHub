@@ -11,8 +11,6 @@ function App() {
   const [user, setUser] = useState(null);
   const [books, setBooks] = useState([]);
 
-  console.log(books);
-
   useEffect(() => {
     fetch('/books')
     .then((res) => res.json())
@@ -29,6 +27,8 @@ function App() {
     });
   }, []);
 
+  const addBook = (book) => setBooks(current => [...current,book])
+
   if (!user) return <LoginPage onLogin={setUser} />;
 
   return (
@@ -38,7 +38,7 @@ function App() {
           <Route path="/" element={<Home user={user} />} />
           <Route path="/home" element={<Home user={user} books={books}/>} />
           <Route path="/books" element={<AllBooks books={books} />} />
-          <Route path="/books/new" element={<AddBookForm />} />
+          <Route path="/books/new" element={<AddBookForm addBook={addBook}/>} />
           <Route path="/books/read" element={<BooksList status="read" />} />
           <Route path="/books/want-to-read" element={<BooksList status="want-to-read" />} />
         </Routes>

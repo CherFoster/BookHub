@@ -69,15 +69,21 @@ class Books(Resource):
     def get(self):
         if session.get('user_id'):
             user = User.query.filter_by(id=session['user_id']).first()
-            # Get the status from the query parameters
-            status = request.args.get('status')
-            book_status = [book for book in user.books if book.status == status]
-            book_list = [book.to_dict() for book in book_status]
+            status = request.args.get('q')
+
+            # Check if the status is provided in the URL
+            if status:
+                book_status = [book for book in user.books if book.status == status]
+                book_list = [book.to_dict() for book in book_status]
+            else:
+                # if status not provided, return all books
+                book_list = [book.to_dict() for book in user.books]
+            
             response = make_response(book_list, 200)
             return response
         else:
             return {"error": "Unauthorized, please log in"}, 401
-    
+
     def post(self):
         if session.get('user_id'):
             json_data = request.get_json()
@@ -88,21 +94,21 @@ class Books(Resource):
             status = json_data.get('status')
             try:
                 new_book = Book(
-                    title = title,
-                    author = author,
-                    image = image,
-                    description = description,
-                    status = status,
-                    user_id=session['user_id']               
+                    title=title,
+                    author=author,
+                    image=image,
+                    description=description,
+                    status=status,
+                    user_id=session['user_id']
                 )
             except ValueError as e:
-                abort(422,e.args[0])
+                abort(422, e.args[0])
 
             db.session.add(new_book)
             db.session.commit()
             response = make_response(new_book.to_dict(), 201)
             return response
-api.add_resource(Books, '/books')
+api.add_resource(Books, '/books', '/books/<string:status>')
 
 class BookId(Resource):
     def get(self, id):

@@ -8,8 +8,8 @@ function BookList({ status }) {
     fetch(`/books?q=${status}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setBooks(data);
+        console.log(data);
       })
   }, [status]);
 
@@ -24,7 +24,7 @@ function BookList({ status }) {
         <ul>
             {books.map((book) => (
             <li key={book.id}>
-                <BookCard book={book} />
+                <BookCard book={book}/>
             </li>
             ))}
         </ul>
