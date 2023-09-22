@@ -1,3 +1,4 @@
+
 .book-list {
     margin-top: -200px; /* Add margin to push the content down from the top */
   }
@@ -10,13 +11,22 @@
   
   .book-list ul li {
     display: inline-block;
-    width: calc(20%);
+    width: calc(15%);
     vertical-align: top;
+    animation-name: book-list-item;
+    animation-duration: 1s; /* Animation duration */
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+    opacity: 0; /* Start with opacity 0 */
   }
   
-  /* Media query for responsive layout (adjust as needed) */
-  @media (max-width: 768px) {
-    .book-list ul li {
-      width: calc(50% - 20px); /* Adjust for 2 cards per row on smaller screens */
+  @keyframes book-list-item {
+    0% {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
     }
   }

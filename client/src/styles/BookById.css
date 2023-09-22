@@ -1,0 +1,62 @@
+.book {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-bottom: 30px;
+  }
+  
+  .book-cover {
+    flex: 0 0 250px;
+    margin-right: 20px;
+  }
+  
+  .book-cover img {
+    width: 100%;
+    box-shadow: 0px 15px 40px -10px rgba(0, 0, 0, 0.5);
+    transition: transform 250ms ease;
+  }
+  
+  .book-cover img:hover {
+    transform: rotateZ(-2deg) scale(0.95);
+  }
+  
+  .book-info {
+    flex: 1;
+  }
+  
+  .book-title-link {
+    font-size: 30px;
+    font-weight: 800;
+    font-style: italic;
+    line-height: 1;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #18f;
+  }
+  
+  .author-line {
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .details {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .book-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .book-action p {
+    margin: 0;
+    padding: 0;
+  }
+  
+  label {
+    margin-top: 10px;
+  }
