@@ -1,3 +1,4 @@
+import '../styles/BookList.css';
 import React, { useEffect, useState } from 'react';
 import BookCard from './BookCard'; 
 
@@ -20,7 +21,7 @@ function BookList({ status }) {
   return (
     <div className="book-list">
       <div className="book-cards">
-        <h1>Book List</h1>
+      <h1>{status.charAt(0).toUpperCase() + status.slice(1)} Book List</h1>
         <ul>
             {books.map((book) => (
             <li key={book.id}>

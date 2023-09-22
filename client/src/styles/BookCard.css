@@ -1,0 +1,71 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Book Card Component */
+  .book-card {
+    width: 220px;
+    /* padding: 5px; */
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 25px rgba(238, 240, 217, 1);
+  }
+  
+  .book-card__cover {
+    position: relative;
+    width: 100%;
+    padding-top: 150%; 
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+  }
+  
+  .book-card__info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
+  }
+  
+  .book-card__title {
+    font-size: 1.5em;
+    margin-bottom: 8px;
+  }
+  
+  .book-card__author {
+    color: #757575;
+    font-size: 1em;
+  }
+  
+  .book-card__link {
+    text-decoration: none;
+    color: inherit;
+  }
+  .book-card__title {
+    font-size: 1em;
+    margin-top: 16px; /* Add top margin to title to position it at the top */
+    text-align: center; /* Center the title horizontally */
+    position: absolute; /* Position title absolutely within the .book-card__cover */
+    top: 0; /* Position title at the top of .book-card__cover */
+    left: 0;
+    right: 0;
+    background-color: rgba(155, 155, 155, 0.8); 
+  }
+  
+  /* Hover effect */
+  .book-card:hover .book-card__cover {
+    transform: scale(1.05); /* Add hover effect to the card */
+  }
+  
+  /* Status styles (adjust as needed) */
+  .book-card__status {
+    font-weight: bold;
+    color: #2ecc71; /* Change to your desired status color */
+  }

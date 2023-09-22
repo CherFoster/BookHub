@@ -1,22 +1,26 @@
+import '../styles/BookCard.css';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
 function BookCard({ book }) {
-    const { id, title, author, description, image, genre, status } = book;
+    const { id, title, author, genre, status, image } = book;
   
     return (
-        <div id={id}>
-            <Link to={`/books/${id}`}> 
-            <div className="book-card">
-                <img src={image} alt={title} />
-                <div className='book-info'>
-                <h3>{title}</h3>
-                <p>By: {author}</p>
-                <p>{genre}</p>
-                <p>{status}</p>
-                </div>
+      <div className="book-card">
+        <Link to={`/books/${id}`} className="book-card__link">
+          <div
+            className="book-card__cover"
+            style={{ backgroundImage: `url(${image})` }}
+          >
+            <div className="book-card__title">{title}</div>
+            <div className="book-card__info">
+              {/* <h3 className="book-card__title">{title}</h3> */}
+              <p className="book-card__author">By: {author}</p>
+              <p className="book-card__genre">{genre}</p>
+              <p className="book-card__status">{status}</p>
             </div>
-            </Link>
+          </div>
+        </Link>
       </div>
     );
   }
