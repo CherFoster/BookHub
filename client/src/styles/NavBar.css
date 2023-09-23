@@ -15,15 +15,14 @@
     overflow: hidden;
     transition: 0.5s;
     margin-top: 20px;
-    margin-right: 20px; /* Add space between links */
+    margin-right: 20px; 
     background: transparent;
     border: none;
     cursor: pointer;
     outline: none;
-    text-decoration: none; /* Remove underlines from links */
+    text-decoration: none; 
 }
 
-/* Styling for links on hover */
 .nav-link:hover {
     background: #03e9f4;
     color: #070707;

@@ -7,7 +7,6 @@ function BookById() {
     const navigate = useNavigate();
     const [book, setBook] = useState(null);
     const [status, setStatus] = useState('');
-    const [isInfoVisible, setIsInfoVisible] = useState(true);
 
     useEffect(() => {
         fetch(`/books/${id}`).then((res) => {
@@ -30,7 +29,7 @@ function BookById() {
         });
       }
 
-    function handleStatusChange(){
+    function handleStatusChange() {
         fetch(`/books/${id}`, {
             method: 'PATCH',
             headers: {
@@ -44,10 +43,6 @@ function BookById() {
         });
       }
 
-    function toggleInfoVisibility() {
-        setIsInfoVisible(!isInfoVisible);
-      }
-
     if (!book) {
         return <div>Loading...</div>;
     }
@@ -58,24 +53,23 @@ function BookById() {
             <img src={book.image} alt={book.title} />
           </div>
           <div className="book-info">
-            <a className="book-title-link" href="#">
-              {book.title}
-            </a>
-            <span className="author-line">by {book.author}</span>
+            <div className="book-title">{book.title}</div>
+            <span className="author-line"> by {book.author}</span>
             <p className="details">{book.description}</p>
-          </div>
+          
           <div className="book-action">
-            <p>Status: {book.status}</p>
-            <label htmlFor="status">Change Status:</label>
-            <input
-              type="text"
-              id="status"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-            />
-            <button onClick={handleStatusChange}>Save</button>
-            <button onClick={handleDelete}>Delete Book</button>
+          <select
+              name="status"
+            //   value={formik.values.status}
+            //   onChange={formik.handleChange}
+            >
+              <option value="read">Read</option>
+              <option value="want-to-read">Want to Read</option>
+            </select>
+            <button className='save' onClick={handleStatusChange}>Save</button>
+            <button className='delete' onClick={handleDelete}>Delete Book</button>
           </div>
+        </div>
         </div>
       );
     }

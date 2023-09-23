@@ -2,8 +2,9 @@
     display: flex;
     align-items: center;
     background: white;
-    padding: 20px;
+    padding: 10px;
     border: 1px solid #ccc;
+    border-radius: 30px;
     margin-bottom: 30px;
   }
   
@@ -24,16 +25,20 @@
   
   .book-info {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    align-items: flex-start;
   }
   
-  .book-title-link {
+  .book-title {
     font-size: 30px;
     font-weight: 800;
     font-style: italic;
     line-height: 1;
     margin-bottom: 10px;
     text-decoration: none;
-    color: #18f;
+    color: rgb(4, 39, 73);
   }
   
   .author-line {
@@ -42,14 +47,16 @@
   }
   
   .details {
-    margin: 0;
-    padding: 0;
+    font-family: sans-serif;
+    font-size: 15px;
+    margin-top: 10px;
   }
   
   .book-action {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-top: 10px;
   }
   
   .book-action p {
@@ -57,6 +64,23 @@
     padding: 0;
   }
   
+  select {
+    margin-top: 10px; 
+  }
+  
   label {
     margin-top: 10px;
   }
+  
+  .save {
+    margin-top: 10px;
+    color: blueviolet;
+  }
+  .delete {
+    margin-top: 10px;
+    color: red;
+  }
+  button:hover {
+    background: rgb(247, 176, 244);
+    border-radius: 5px;
+}
