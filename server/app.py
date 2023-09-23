@@ -137,6 +137,12 @@ class BookId(Resource):
         book = Book.query.filter_by(id=id).first()
         if not book:
             raise NotFound
+        
+        # delete reviews associated with the book id
+        reviews = Review.query.filter_by(book_id=id).all()
+        for review in reviews:
+            db.session.delete(review)
+
         db.session.delete(book)
         db.session.commit()
         response = make_response("Deleted", 204)

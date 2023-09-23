@@ -62,7 +62,7 @@ class Book(db.Model, SerializerMixin):
     status = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
-    reviews = db.relationship('Review', back_populates='book')
+    reviews = db.relationship('Review', back_populates='book', cascade='all, delete-orphan')
     user = db.relationship('User', back_populates='books')
     
     tags = db.relationship('Tag', secondary=genre_tag, back_populates='books')
