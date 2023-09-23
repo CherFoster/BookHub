@@ -1,12 +1,14 @@
 import '../styles/BookById.css';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import ReviewForm from './ReviewForm';
 
 function BookById() {
     const {id} = useParams();
     const navigate = useNavigate();
     const [book, setBook] = useState(null);
     const [status, setStatus] = useState('');
+    const [submittedReviews, setSubmittedReviews] = useState([]);
 
     useEffect(() => {
         fetch(`/books/${id}`).then((res) => {
@@ -38,9 +40,13 @@ function BookById() {
             body: JSON.stringify({status}),
         }).then((res) => {
             if(res.ok) {
-                navigate(`/books?q=${status}`)
+                navigate(`/`)
             }
         });
+      }
+
+      function handleReviewSubmit(reviewData) {
+        setSubmittedReviews([...submittedReviews, reviewData])
       }
 
     if (!book) {
@@ -69,6 +75,17 @@ function BookById() {
             <button className='save' onClick={handleStatusChange}>Save</button>
             <button className='delete' onClick={handleDelete}>Delete Book</button>
           </div>
+          <div className='review-form'>
+            <ReviewForm onReviewSubmit={handleReviewSubmit} bookId={id}/>
+          </div>
+          <div className='submitted-reviews'>
+            {submittedReviews.map((review, index) => (
+              <div key={index} className='review'>
+                <p>Review: {review.review}</p>
+                <p>Rating: {review.rating}</p>
+                </div>
+              ))}
+            </div>
         </div>
         </div>
       );

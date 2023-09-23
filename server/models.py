@@ -80,7 +80,7 @@ class Book(db.Model, SerializerMixin):
 class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
-    serialize_rules = ('-user.reviews',)
+    serialize_rules = ('-user.reviews', '-book.reviews',)
 
     id = db.Column(db.Integer, primary_key=True)
     review = db.Column(db.String)

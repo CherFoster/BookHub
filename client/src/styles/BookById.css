@@ -6,32 +6,33 @@
     border: 1px solid #ccc;
     border-radius: 30px;
     margin-bottom: 30px;
-  }
+    position: relative;
+}
   
-  .book-cover {
+.book-cover {
     flex: 0 0 250px;
     margin-right: 20px;
-  }
+}
   
-  .book-cover img {
+.book-cover img {
     width: 100%;
     box-shadow: 0px 15px 40px -10px rgba(0, 0, 0, 0.5);
     transition: transform 250ms ease;
-  }
+}
   
-  .book-cover img:hover {
+.book-cover img:hover {
     transform: rotateZ(-2deg) scale(0.95);
-  }
+}
   
-  .book-info {
+.book-info {
     flex: 1;
     display: flex;
     flex-direction: column;
     margin-left: 20px;
     align-items: flex-start;
-  }
+}
   
-  .book-title {
+.book-title {
     font-size: 30px;
     font-weight: 800;
     font-style: italic;
@@ -39,48 +40,63 @@
     margin-bottom: 10px;
     text-decoration: none;
     color: rgb(4, 39, 73);
-  }
+}
   
-  .author-line {
+.author-line {
     font-weight: 600;
     margin-bottom: 10px;
-  }
+}
   
-  .details {
+.details {
     font-family: sans-serif;
     font-size: 15px;
     margin-top: 10px;
-  }
+}
   
-  .book-action {
+.book-action {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-top: 10px;
-  }
+}
   
-  .book-action p {
+.book-action p {
     margin: 0;
     padding: 0;
-  }
+}
   
-  select {
+select {
     margin-top: 10px; 
   }
   
-  label {
+label {
     margin-top: 10px;
-  }
+}
   
-  .save {
+.save {
     margin-top: 10px;
     color: blueviolet;
-  }
-  .delete {
+}
+.delete {
     margin-top: 10px;
     color: red;
-  }
-  button:hover {
+}
+button:hover {
     background: rgb(247, 176, 244);
     border-radius: 5px;
 }
+.review-form {
+  position: absolute; /* Set the review form to absolute positioning */
+  top: 100px; /* Align the review form to the top of the container */
+  right: 300px; /* Align the review form to the right of the container */
+  padding: 10px; /* Add padding as needed */
+  background: white; /* Add a background color or styling */
+}
+
+.review-form textarea,
+.review-form input[type="number"],
+.review-form button {
+  margin-bottom: 10px;
+}
+
+

@@ -20,7 +20,7 @@ function BookList({ status }) {
   }
 
   if (books.length === 0) {
-    return <div>No books found for this status.</div>;
+    return <div>No books found.</div>;
   }
 
   return (
