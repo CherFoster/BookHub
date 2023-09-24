@@ -52,7 +52,7 @@ class Tag(db.Model, SerializerMixin):
 class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
 
-    serialize_rules = ('-user', '-tags', '-reviews.user',)
+    serialize_rules = ('-user', '-reviews.user',)
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)

@@ -10,36 +10,24 @@ function BookById({ user }) {
     const [status, setStatus] = useState('');
     const [submittedReviews, setSubmittedReviews] = useState([]);
     const [showReviewForm, setShowReviewForm] = useState(true);
+    const [reviewFormData, setReviewFormData] = useState({
+      review: '', 
+      rating: 0,  
+  });
 
     useEffect(() => {
-        // Load submitted reviews from localStorage when the component mounts
-        const storedReviews = localStorage.getItem('submittedReviews');
-        if (storedReviews) {
-            setSubmittedReviews(JSON.parse(storedReviews));
-        }
-    
-        // Load showReviewForm state from localStorage
-        const storedShowReviewForm = localStorage.getItem('showReviewForm');
-        if (storedShowReviewForm) {
-            setShowReviewForm(JSON.parse(storedShowReviewForm));
-        }
-    
-        fetch(`/books/${id}`)
-            .then((res) => {
-                if (res.ok) {
-                    res.json().then((data) => {
-                        setBook(data);
-                        setStatus(data.status);
-    
-                        // Check if user exists and has an 'id' property before filtering reviews
-                        if (user && user.id) {
-                            const userReviews = data.reviews.filter((review) => review.user_id === user.id);
-                            setSubmittedReviews(userReviews);
-                        }
+      fetch(`/books/${id}`)
+          .then((res) => {
+              if (res.ok) {
+                  res.json().then((data) => {
+                      setBook(data);
+                      setStatus(data.status);
+                      setSubmittedReviews(data.reviews);
+                      setShowReviewForm(data.reviews.length === 0);
                     });
-                }
-            });
-    }, [id, user]);
+                  }
+                });
+              }, [id, user]);
 
     function handleDelete() {
         fetch(`/books/${id}`, {
@@ -65,17 +53,43 @@ function BookById({ user }) {
         });
       }
 
-      function handleReviewSubmit(reviewData) {
-        // Update submitted reviews and store them in localStorage
-        const updatedReviews = [...submittedReviews, reviewData];
-        setSubmittedReviews(updatedReviews);
-        localStorage.setItem('submittedReviews', JSON.stringify(updatedReviews));
+      function handleReviewSubmit() {
+        fetch(`/books/${id}/reviews`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reviewFormData),
+        })
+        .then((res) => {
+            if (res.ok) {
+                // Clear the review form after successful submission
+                setReviewFormData({
+                    review: '',
+                    rating: 0,
+                });
     
-        setShowReviewForm(false); // Hide the review form after submission
+                // Fetch the updated book details, including reviews, from the server
+                fetch(`/books/${id}`)
+                    .then((res) => {
+                        if (res.ok) {
+                            return res.json();
+                        } else {
+                            throw new Error('Failed to fetch book data after review submission');
+                        }
+                    })
+                    .then((data) => {
+                        setBook(data);
+                        setStatus(data.status);
+                        setSubmittedReviews(data.reviews);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
+        });
+    }
 
-        // Store the updated showReviewForm state in localStorage
-        localStorage.setItem('showReviewForm', JSON.stringify(false));
-      }
 
     if (!book) {
         return <div>Loading...</div>;
@@ -94,8 +108,8 @@ function BookById({ user }) {
           <div className="book-action">
             <select
             name="status"
-            value={status} // Connect the value to the 'status' state
-            onChange={(e) => setStatus(e.target.value)} // Update the 'status' state on change
+            value={status} 
+            onChange={(e) => setStatus(e.target.value)} 
             >
               <option value="read">Read</option>
               <option value="want-to-read">Want to Read</option>
@@ -104,15 +118,22 @@ function BookById({ user }) {
             <button className='delete' onClick={handleDelete}>Delete Book</button>
           </div>
           <div className='review-form'>
-           {showReviewForm && <ReviewForm onReviewSubmit={handleReviewSubmit} bookId={id} />}
-        </div>
-          <div className='submitted-reviews'>
-            {submittedReviews.map((review, index) => (
-              <div key={index} className='review'>
-                <p className='review'>Review: {review.review}</p>
-                <p className='rating'>Rating: {review.rating}</p>
-                </div>
-              ))}
+                {showReviewForm && (
+                    <ReviewForm
+                        onReviewSubmit={handleReviewSubmit}
+                        bookId={id}
+                        reviewFormData={reviewFormData}
+                        setReviewFormData={setReviewFormData}
+                    />
+                )}
+            </div>
+            <div className='submitted-reviews'>
+                {submittedReviews.map((review, index) => (
+                    <div key={index} className='review'>
+                        <p className='review'>Review: {review.review}</p>
+                        <p className='rating'>Rating: {review.rating}</p>
+                    </div>
+                ))}
             </div>
         </div>
         </div>

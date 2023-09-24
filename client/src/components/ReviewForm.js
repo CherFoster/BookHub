@@ -17,7 +17,7 @@ function ReviewForm({bookId, onReviewSubmit}) {
             rating: '',
         },
         validationSchema: formSchema,
-        onSubmit: (values, { setSubmitting, resetForm }) => {
+        onSubmit: (values, { setSubmitting }) => {
             setSubmitting(true);
             const reviewData = {
                 review: values.review,

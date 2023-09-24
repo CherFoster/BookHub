@@ -75,7 +75,9 @@ if __name__ == '__main__':
                 description = fake.paragraph(nb_sentences=10),
                 status = random.choice(read_status),
             )
-            book.tags = random.sample(tags, k=random.randint(1,2))
+            book_tags = random.sample(tags, k=random.randint(1,2))
+            for tag in book_tags:
+                book.tags.append(tag)
 
             book.user = rc(users)
             books.append(book)
@@ -92,7 +94,6 @@ if __name__ == '__main__':
                 book_id = rc(books).id
             )
             reviews.append(review)
-            db.session.add_all(reviews)
-        
+        db.session.add_all(reviews)
         db.session.commit()
         print("Complete.")
