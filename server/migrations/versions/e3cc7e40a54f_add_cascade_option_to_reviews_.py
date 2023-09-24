@@ -1,8 +1,8 @@
-"""Initial migration
+"""add cascade option to reviews relationship
 
-Revision ID: 779a0e4a38c5
+Revision ID: e3cc7e40a54f
 Revises: 
-Create Date: 2023-09-08 14:20:20.265652
+Create Date: 2023-09-23 15:02:45.089717
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '779a0e4a38c5'
+revision = 'e3cc7e40a54f'
 down_revision = None
 branch_labels = None
 depends_on = None

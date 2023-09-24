@@ -10,6 +10,7 @@ function BookList({ status }) {
     fetch(`/books?q=${status}`)
       .then((response) => response.json())
       .then((data) => {
+        // console.log(data);
         setBooks(data);
         setIsLoading(false);
       })

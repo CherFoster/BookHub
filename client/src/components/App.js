@@ -6,6 +6,7 @@ import Home from "./Home";
 import BooksList from './BooksList';
 import AddBookForm from './AddBookForm';
 import BookById from "./BookById";
+import BookTags from "./BookTags";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -27,7 +28,13 @@ function App() {
     });
   }, []);
 
-  const addBook = (book) => setBooks(current => [...current,book])
+  const addBook = (book) => {
+    setBooks((current) => {
+      // Ensure current is an array by using Array.from
+      const currentArray = Array.isArray(current) ? current : [];
+      return [...currentArray, book];
+    });
+  };
 
   if (!user) return <LoginPage onLogin={setUser} />;
 
@@ -38,9 +45,11 @@ function App() {
           <Route path="/" element={<Home user={user} />} />
           <Route path="/home" element={<Home user={user} books={books}/>} />
           <Route path="/books/new" element={<AddBookForm addBook={addBook}/>} />
+          <Route path="/books/:id" element={<BookById />} />
           <Route path="/books/read" element={<BooksList status="read" />} />
           <Route path="/books/want-to-read" element={<BooksList status="want-to-read" />} />
-          <Route path="/books/:id" element={<BookById />} />
+          <Route path="/tag" element={<BookTags />} />
+          <Route path="/tag/:genre" element={<BookTags />} />
         </Routes>
       </>
   );

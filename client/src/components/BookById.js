@@ -3,32 +3,52 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ReviewForm from './ReviewForm';
 
-function BookById() {
+function BookById({ user }) {
     const {id} = useParams();
     const navigate = useNavigate();
     const [book, setBook] = useState(null);
     const [status, setStatus] = useState('');
     const [submittedReviews, setSubmittedReviews] = useState([]);
+    const [showReviewForm, setShowReviewForm] = useState(true);
 
     useEffect(() => {
-        fetch(`/books/${id}`).then((res) => {
-          if (res.ok){
-            res.json().then((data) => {
-                setBook(data)
-                setStatus(data.status)
-            })
-          }
-        });
-      }, [id]);
+        // Load submitted reviews from localStorage when the component mounts
+        const storedReviews = localStorage.getItem('submittedReviews');
+        if (storedReviews) {
+            setSubmittedReviews(JSON.parse(storedReviews));
+        }
+    
+        // Load showReviewForm state from localStorage
+        const storedShowReviewForm = localStorage.getItem('showReviewForm');
+        if (storedShowReviewForm) {
+            setShowReviewForm(JSON.parse(storedShowReviewForm));
+        }
+    
+        fetch(`/books/${id}`)
+            .then((res) => {
+                if (res.ok) {
+                    res.json().then((data) => {
+                        setBook(data);
+                        setStatus(data.status);
+    
+                        // Check if user exists and has an 'id' property before filtering reviews
+                        if (user && user.id) {
+                            const userReviews = data.reviews.filter((review) => review.user_id === user.id);
+                            setSubmittedReviews(userReviews);
+                        }
+                    });
+                }
+            });
+    }, [id, user]);
 
     function handleDelete() {
         fetch(`/books/${id}`, {
             method: 'DELETE',
         }).then((res) => {
             if(res.ok) {
-                navigate(`/books?q=${status}`)
+                navigate(`/`)
             }
-        });
+        })
       }
 
     function handleStatusChange() {
@@ -46,7 +66,15 @@ function BookById() {
       }
 
       function handleReviewSubmit(reviewData) {
-        setSubmittedReviews([...submittedReviews, reviewData])
+        // Update submitted reviews and store them in localStorage
+        const updatedReviews = [...submittedReviews, reviewData];
+        setSubmittedReviews(updatedReviews);
+        localStorage.setItem('submittedReviews', JSON.stringify(updatedReviews));
+    
+        setShowReviewForm(false); // Hide the review form after submission
+
+        // Store the updated showReviewForm state in localStorage
+        localStorage.setItem('showReviewForm', JSON.stringify(false));
       }
 
     if (!book) {
@@ -61,13 +89,13 @@ function BookById() {
           <div className="book-info">
             <div className="book-title">{book.title}</div>
             <span className="author-line"> by {book.author}</span>
-            <p className="details">{book.description}</p>
+            <p className="details" >{book.description}</p>
           
           <div className="book-action">
-          <select
-              name="status"
-            //   value={formik.values.status}
-            //   onChange={formik.handleChange}
+            <select
+            name="status"
+            value={status} // Connect the value to the 'status' state
+            onChange={(e) => setStatus(e.target.value)} // Update the 'status' state on change
             >
               <option value="read">Read</option>
               <option value="want-to-read">Want to Read</option>
@@ -76,13 +104,13 @@ function BookById() {
             <button className='delete' onClick={handleDelete}>Delete Book</button>
           </div>
           <div className='review-form'>
-            <ReviewForm onReviewSubmit={handleReviewSubmit} bookId={id}/>
-          </div>
+           {showReviewForm && <ReviewForm onReviewSubmit={handleReviewSubmit} bookId={id} />}
+        </div>
           <div className='submitted-reviews'>
             {submittedReviews.map((review, index) => (
               <div key={index} className='review'>
-                <p>Review: {review.review}</p>
-                <p>Rating: {review.rating}</p>
+                <p className='review'>Review: {review.review}</p>
+                <p className='rating'>Rating: {review.rating}</p>
                 </div>
               ))}
             </div>

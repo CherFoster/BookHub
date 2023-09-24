@@ -1,7 +1,9 @@
 import '../styles/Signup.css';
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 function SignupForm({ onLogin }) {
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState([]);
@@ -20,7 +22,10 @@ function SignupForm({ onLogin }) {
         }).then((res) => {
             setIsLoading(false);
             if (res.ok) {
-                res.json().then((user) => onLogin(user));
+                res.json().then((user) => {
+                    onLogin(user)
+                    navigate('/');
+                });
             } else {
                 res.json().then((err) => {
                     setErrors(err.errors || ["An error occured"]);

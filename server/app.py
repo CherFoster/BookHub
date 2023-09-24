@@ -187,17 +187,26 @@ class Reviews(Resource):
 api.add_resource(Reviews, '/books/<int:book_id>/reviews')
 
 class BookTags(Resource):
-    def get(self, tag):
-        tagged_books = Tag.query.filter_by(genre=tag).first()
+    def get(self, tag=None):
+        if tag:
+            # Handle request to get books by a specific genre (e.g., /tag/<string:tag>)
+            if not session.get('user_id'):
+                return {"error": "Unauthorized, please log in"}, 401
 
-        if not tagged_books:
-            raise NotFound
-        
-        books = tagged_books.books
-        book_list = [book.to_dict() for book in books]
-        response = make_response(book_list, 200)
-        return response
-api.add_resource(BookTags, '/books/tag/<string:tag>')
+            user_id = session['user_id']
+
+            # Filter books by tag and the user who uploaded them
+            books = (
+                Book.query.join(Book.tags).filter(Tag.genre == tag, Book.user_id == user_id).all())
+
+            book_list = [book.to_dict() for book in books]
+            response = make_response(book_list, 200)
+            return response
+        else:
+            # Handle request to get all genres (e.g., /tag)
+            genres = [tag.genre for tag in Tag.query.all()]
+            return make_response(genres, 200)
+api.add_resource(BookTags, '/tag', '/tag/<string:tag>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -6,6 +6,7 @@ function Home({ user }) {
   return (
     <div className='home-container'>
       <h2>Welcome to BookHub, {user.username}!</h2>
+      <img className='image' src='https://i.postimg.cc/dVyW85Yh/bookshelf-clipart-cartoon-8-removebg-preview.png' />
       <h4>
         Your all-in-one companion for managing your reading experience.
         <br />

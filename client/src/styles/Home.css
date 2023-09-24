@@ -141,3 +141,9 @@
 .all-books ul li img:hover {
   transform: scale(1.1);
 }
+
+.image {
+  margin-top: -50px;
+  margin-bottom: 20px;
+  width: 40%;
+}
