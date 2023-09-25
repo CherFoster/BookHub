@@ -97,7 +97,14 @@ button:hover {
 }
 
 .review {
-    margin-top: 50px;
+    margin-top: -10px;
+    font-size: 17px;
+}
+
+.rating {
+    margin-top: 10px;
+    margin-left: -136px;
+    font-size: 17px;
 }
 
 

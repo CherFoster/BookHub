@@ -27,7 +27,7 @@ function AddBookForm({addBook}) {
           headers: {
             "Content-Type" : "application/json",
           },
-          body: JSON.stringify(values, null)
+          body: JSON.stringify(values)
         }).then((res) => {
           if(res.ok) {
             res.json().then(book => {

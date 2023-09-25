@@ -3,7 +3,7 @@ from random import randint, choice as rc
 from faker import Faker
 from app import app
 from config import db
-from models import User, Tag, Book, Review, genre_tag
+from models import User, Tag, Book, Review
 import random
 
 if __name__ == '__main__':
@@ -58,8 +58,8 @@ if __name__ == '__main__':
         for _ in range(50):
             tag = Tag(genre=random.choice(genres)) 
             tags.append(tag)
-            db.session.add_all(tags)
 
+        db.session.add_all(tags)
         db.session.commit()
 
         books = []
@@ -81,8 +81,8 @@ if __name__ == '__main__':
 
             book.user = rc(users)
             books.append(book)
-            db.session.add_all(books)
 
+        db.session.add_all(books)
         db.session.commit()
 
         reviews = []

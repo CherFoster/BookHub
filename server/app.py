@@ -92,6 +92,8 @@ class Books(Resource):
             image = json_data.get('image')
             description = json_data.get('description')
             status = json_data.get('status')
+            genre = json_data.get('genre')
+            
             try:
                 new_book = Book(
                     title=title,
@@ -101,6 +103,14 @@ class Books(Resource):
                     status=status,
                     user_id=session['user_id']
                 )
+                tag = Tag.query.filter_by(genre=genre).first()
+                if not tag:
+                    tag = Tag(genre=genre)
+                    db.session.add(tag)
+
+                # Associate the book with the tag
+                tag.books.append(new_book)
+
             except ValueError as e:
                 abort(422, e.args[0])
 
@@ -189,7 +199,6 @@ api.add_resource(Reviews, '/books/<int:book_id>/reviews')
 class BookTags(Resource):
     def get(self, tag=None):
         if tag:
-            # Handle request to get books by a specific genre (e.g., /tag/<string:tag>)
             if not session.get('user_id'):
                 return {"error": "Unauthorized, please log in"}, 401
 
@@ -203,7 +212,7 @@ class BookTags(Resource):
             response = make_response(book_list, 200)
             return response
         else:
-            # Handle request to get all genres (e.g., /tag)
+            # Handle request to get all genres 
             genres = [tag.genre for tag in Tag.query.all()]
             return make_response(genres, 200)
 api.add_resource(BookTags, '/tag', '/tag/<string:tag>')

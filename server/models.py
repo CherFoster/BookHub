@@ -3,7 +3,7 @@ from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
 from config import db, bcrypt
 
-genre_tag = db.Table('genre_tag',
+book_tags = db.Table('book_tags',
     db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
     db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'))
 )
@@ -44,7 +44,7 @@ class Tag(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     genre = db.Column(db.String)
 
-    books = db.relationship('Book', secondary=genre_tag, back_populates='tags')
+    books = db.relationship('Book', secondary=book_tags, back_populates='tags')
 
     def __repr__(self):
         return f'<Tag {self.genre}>'
@@ -52,7 +52,7 @@ class Tag(db.Model, SerializerMixin):
 class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
 
-    serialize_rules = ('-user', '-reviews.user',)
+    serialize_rules = ('-user', '-tags', '-reviews.user',)
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
@@ -65,7 +65,7 @@ class Book(db.Model, SerializerMixin):
     reviews = db.relationship('Review', back_populates='book', cascade='all, delete-orphan')
     user = db.relationship('User', back_populates='books')
     
-    tags = db.relationship('Tag', secondary=genre_tag, back_populates='books')
+    tags = db.relationship('Tag', secondary=book_tags, back_populates='books')
 
     def __repr__(self):
         return (
