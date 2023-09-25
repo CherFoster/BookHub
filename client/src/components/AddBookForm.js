@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function AddBookForm({addBook}) {
+function AddBookForm({ addBook }) {
     const navigate = useNavigate();
     const formSchema = yup.object().shape({
       title: yup.string().required("Must enter a title"),

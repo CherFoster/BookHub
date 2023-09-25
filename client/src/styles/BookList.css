@@ -6,6 +6,7 @@
 }
 
 h1 {
+  text-align: center;
   margin-top: -200px;
   margin-bottom: 20px;
 }
@@ -19,7 +20,7 @@ h1 {
   animation-fill-mode: forwards;
   animation-timing-function: ease-in-out;
   opacity: 0; 
-  margin-right: 25px;
+  margin-right: 150px;
 }
 
 @keyframes book-list-item {

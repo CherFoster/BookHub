@@ -52,4 +52,40 @@ h3 {
 
 .book-list {
     margin-top: 50px;
+    list-style: none;
+    padding: 0;
 }
+h1 {
+    margin-top: -200px;
+    margin-bottom: 20px;
+}
+
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+}
+
+.book-list li {
+    display: inline-block;
+    width: calc(15%);
+    vertical-align: top;
+    animation-name: book-list-item;
+    animation-duration: 1s; 
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+    opacity: 0; 
+    margin-right: 25px;
+}
+
+@keyframes book-list-item {
+    0% {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }

@@ -3,7 +3,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 function BookCard({ book }) {
-  const { id, title, author, genre, status, image } = book;
+  const { id, title, author, image } = book;
 
   return (
     <div className="book-card">
@@ -15,5 +15,5 @@ function BookCard({ book }) {
     </div>
   );
 }
-  
-  export default BookCard;
+
+export default BookCard;
